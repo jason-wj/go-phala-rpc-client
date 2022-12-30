@@ -19,6 +19,7 @@ package gsrpc_test
 import (
 	"fmt"
 	"math/big"
+	"testing"
 	"time"
 
 	gsrpc "github.com/centrifuge/go-substrate-rpc-client/v4"
@@ -28,7 +29,7 @@ import (
 	"github.com/centrifuge/go-substrate-rpc-client/v4/types/codec"
 )
 
-func Example_simpleConnect() {
+func Test_simpleConnect(t *testing.T) {
 	// The following example shows how to instantiate a Substrate API and use it to connect to a node
 
 	api, err := gsrpc.NewSubstrateAPI(config.Default().RPCURL)
@@ -53,7 +54,7 @@ func Example_simpleConnect() {
 	// Output: You are connected to chain Development using Parity Polkadot v0.9.21-56cbe45f6c9
 }
 
-func Example_listenToNewBlocks() {
+func Test_listenToNewBlocks(t *testing.T) {
 	// This example shows how to subscribe to new blocks.
 	//
 	// It displays the block number every time a new block is seen by the node you are connected to.
@@ -85,7 +86,7 @@ func Example_listenToNewBlocks() {
 	}
 }
 
-func Example_listenToBalanceChange() {
+func Test_listenToBalanceChange(t *testing.T) {
 	// This example shows how to instantiate a Substrate API and use it to connect to a node and retrieve balance
 	// updates
 	//

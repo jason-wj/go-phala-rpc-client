@@ -49,4 +49,5 @@ func extractDefaultRPCURL() string {
 	// Fallback
 	//return "ws://127.0.0.1:9944"
 	return "wss://khala-rpc.dwellir.com"
+	//return "wss://poc5.phala.network/ws"
 }
