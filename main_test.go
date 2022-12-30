@@ -29,6 +29,7 @@ import (
 	"github.com/centrifuge/go-substrate-rpc-client/v4/types/codec"
 )
 
+// 已测试
 func Test_simpleConnect(t *testing.T) {
 	// The following example shows how to instantiate a Substrate API and use it to connect to a node
 
@@ -54,6 +55,7 @@ func Test_simpleConnect(t *testing.T) {
 	// Output: You are connected to chain Development using Parity Polkadot v0.9.21-56cbe45f6c9
 }
 
+// 已测试
 func Test_listenToNewBlocks(t *testing.T) {
 	// This example shows how to subscribe to new blocks.
 	//
@@ -153,7 +155,8 @@ func Test_listenToBalanceChange(t *testing.T) {
 	}
 }
 
-func Example_unsubscribeFromListeningToUpdates() {
+// 已测试
+func Test_unsubscribeFromListeningToUpdates(t *testing.T) {
 	// This example shows how to subscribe to and later unsubscribe from listening to block updates.
 	//
 	// In this example we're calling the built-in unsubscribe() function after a timeOut of 20s to cleanup and
@@ -184,7 +187,7 @@ func Example_unsubscribeFromListeningToUpdates() {
 	}
 }
 
-func Example_makeASimpleTransfer() {
+func Test_makeASimpleTransfer(t *testing.T) {
 	// This sample shows how to create a transaction to make a transfer from one an account to another.
 
 	// Instantiate the API
