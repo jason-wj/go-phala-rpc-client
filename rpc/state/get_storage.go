@@ -17,6 +17,7 @@
 package state
 
 import (
+	"fmt"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/client"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/types"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/types/codec"
@@ -64,7 +65,7 @@ func (s *state) getStorageRaw(key types.StorageKey, blockHash *types.Hash) (*typ
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println(res)
 	bz, err := codec.HexDecodeString(res)
 	if err != nil {
 		return nil, err

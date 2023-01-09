@@ -23,6 +23,7 @@ import (
 	"github.com/centrifuge/go-substrate-rpc-client/v4/rpc/chain"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/rpc/mmr"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/rpc/offchain"
+	"github.com/centrifuge/go-substrate-rpc-client/v4/rpc/pha"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/rpc/state"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/rpc/system"
 	"github.com/centrifuge/go-substrate-rpc-client/v4/types"
@@ -37,6 +38,7 @@ type RPC struct {
 	State    state.State
 	System   system.System
 	client   client.Client
+	Pha      pha.Pha
 }
 
 func NewRPC(cl client.Client) (*RPC, error) {
@@ -58,5 +60,6 @@ func NewRPC(cl client.Client) (*RPC, error) {
 		State:    st,
 		System:   system.NewSystem(cl),
 		client:   cl,
+		Pha:      pha.NewPha(cl),
 	}, nil
 }

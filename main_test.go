@@ -17,7 +17,9 @@
 package gsrpc_test
 
 import (
+	"encoding/binary"
 	"fmt"
+	"github.com/centrifuge/go-substrate-rpc-client/v4/types/phatypes"
 	"math/big"
 	"testing"
 	"time"
@@ -54,6 +56,67 @@ func Test_simpleConnect(t *testing.T) {
 	fmt.Printf("You are connected to chain %v using %v v%v\n", chain, nodeName, nodeVersion)
 	// Output: You are connected to chain Development using Parity Polkadot v0.9.21-56cbe45f6c9
 }
+
+func Test_Pool(t *testing.T) {
+	// Instantiate the API
+	api, err := gsrpc.NewSubstrateAPI(config.Default().RPCURL)
+	if err != nil {
+		panic(err)
+	}
+
+	meta, err := api.RPC.State.GetMetadataLatest()
+	if err != nil {
+		panic(err)
+	}
+
+	/*key, err := types.CreateStorageKey(meta, "PhalaBasePool", "PoolCount", nil)
+	if err != nil {
+		panic(err)
+	}*/
+
+	key, err := types.CreateStorageKey(meta, "PhalaBasePool", "Pools", Int64ToBytes(2931))
+	if err != nil {
+		panic(err)
+	}
+
+	/*key, err := types.CreateStorageKey(meta, "PhalaBasePool", "PoolDescriptions", Int64ToBytes(2139))
+	if err != nil {
+		panic(err)
+	}*/
+
+	result := phatypes.StakePool{}
+	//var result int64
+	//println(key.Hex())
+	ok, err := api.RPC.State.GetStorageLatest(key, &result)
+	//addr1, _ := types.NewAddressFromHexAccountID(result.LockAccount.ToHexString())
+	//fmt.Println(result.LockAccount)
+	//addr2, _ := types.NewAddressFromHexAccountID(result.OwnerRewardAccount.ToHexString())
+	//fmt.Println(result.OwnerRewardAccount)
+	if err != nil || !ok {
+		panic(err)
+	}
+	fmt.Println(result)
+
+	//164748685233060660961718573800725639936
+
+	/*c, err := types.NewCall(meta, "PhalaBasePool.Pools", 3062)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(c)*/
+
+	// Create the extrinsic
+	//ext := types.NewExtrinsic(c)
+
+	/*count, err := api.RPC.Pha.PoolCount()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(count)*/
+
+}
+
+// 0x00730b0000000000001085784f71f17b2384f548b7d87d2f25a3398bc4be11b487b1559101943866598279225a3f483b000000000000000000d0171d54f7463e0000000000000000000000c52d000062702f922ced1c0f680ea220204a5b6f8798c2c783d4435ff76207361e4ff6c8000100a0cc68448a3d000000000000000000043a296decee44b16665d51e0d1b27cf7a7e11a440f0df47b48d6ecba869aa810f00736c2f922ced1c0f680ea220204a5b6f8798c2c783d4435ff76207361e4ff6c8736f2f922ced1c0f680ea220204a5b6f8798c2c783d4435ff76207361e4ff6c8
 
 // 已测试
 func Test_listenToNewBlocks(t *testing.T) {
@@ -433,7 +496,6 @@ func Example_transactionWithEvents() {
 
 	// Create the extrinsic
 	ext := types.NewExtrinsic(c)
-
 	genesisHash, err := api.RPC.Chain.GetBlockHash(0)
 	if err != nil {
 		panic(err)
@@ -493,3 +555,16 @@ func Example_transactionWithEvents() {
 		}
 	}
 }
+
+func Int64ToBytes(i uint64) []byte {
+	var buf = make([]byte, 8)
+	//小端
+	binary.LittleEndian.PutUint64(buf, uint64(i))
+	return buf
+}
+
+func BytesToInt64(buf []byte) uint64 {
+	return uint64(binary.BigEndian.Uint64(buf))
+}
+
+//
